@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const animalSchema = new mongoose.Schema({
     nome: String,
-    idade: Number,
+    idade: String,
     raca: String,
     porte: String,
     descricao: String

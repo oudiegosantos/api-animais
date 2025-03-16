@@ -14,7 +14,7 @@ form.addEventListener('submit', async (e) => {
 
 try {
 
-    const response = await fetch('http://localhost:5500/api/animais', {
+    const response = await fetch(`http://localhost:5500/api/animais/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -41,9 +41,12 @@ async function carregarAnimais() {
         const response =  await fetch('http://localhost:5500/api/animais');
         const animais = await response.json();
 
+        listaAnimais.innerHTML = '';
+
         animais.forEach(animal => {
             const li = document.createElement('li');
-            li.innerHTML = `Nome: ${animal.nome} Idade: ${animal.idade} Raça: ${animal.raca} Porte: ${animal.porte} Descrição: ${animal.descricao}
+            li.innerHTML = `Nome: ${animal.nome} </br> 
+            Idade: ${animal.idade} 
             <button class="detalhes-btn" data-id="${animal._id}">Detalhes</button>`
             listaAnimais.appendChild(li);
 
@@ -64,10 +67,10 @@ async function carregarAnimais() {
 }
 
 async function obterDetalhesAnimal(id) {
-    console.log("id do animal: ", id)
+    console.log("detalhes:  ", id)
     try {
 
-        const response = await fetch(`http://localhost:5500/api/animais/67ccd4c72d303678ab76f36b`);
+        const response = await fetch(`http://localhost:5500/api/animais/${id}`);
 
         if(!response.ok) {
             console.error("erro na resposta da API", response.status);
@@ -82,11 +85,32 @@ async function obterDetalhesAnimal(id) {
 }
 
 
-
 function exibirDetalhes(animal) {
     const detalhesAnimal = document.getElementById('detalhesAnimal');
+    detalhesAnimal.innerHTML = `
+    <p>Nome: ${animal.nome}</p>
+    <p>Raça: ${animal.raca}</p>
+    <p>Porte: ${animal.porte}</p>
+    <p>Descrição: ${animal.descricao}</p>`
+}
 
-    detalhesAnimal.innerHTML = `${animal.nome}`
+async function removerAnimais() {
+    try {
+
+        const response = await fetch('http://localhost:5500/api/animais', {
+            method: 'DELETE'
+        });
+
+        if(response.ok) {
+            alert("Animais removidos com sucesso!");
+            carregarAnimais();
+        } else {
+            alert("Erro ao remover animais!");
+        }
+    } catch (error) {
+        console.error("Erro ao remover todos os animais!", error);
+
+    }
 }
 
 

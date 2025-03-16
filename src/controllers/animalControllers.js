@@ -59,3 +59,17 @@ exports.obterAnimalPorId = async (req, res) => {
         return res.status(500).json({ message: "Erro ao buscar animal", error: error.message });
     }
 };
+
+// deletar todos os animais 
+
+exports.removerAnimais = async (req, res) => {
+    try {
+
+        await animal.deleteMany({});
+        return res.status(200).json({message: `Todos os animais foram removidos!`});
+
+    } catch (error) {
+        console.error("Erro ao removar os animais", error);
+        res.status(500).json({message: "Erro ao remover todos os animais!", error});
+    }
+}
