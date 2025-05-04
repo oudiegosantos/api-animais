@@ -103,10 +103,13 @@ async function removerAnimais() {
 
         if(response.ok) {
             alert("Animais removidos com sucesso!");
-            carregarAnimais();
         } else {
             alert("Erro ao remover animais!");
         }
+        carregarAnimais();
+
+        const detalhesAnimal = document.getElementById('detalhesAnimal');
+        detalhesAnimal.innerHTML = '';
     } catch (error) {
         console.error("Erro ao remover todos os animais!", error);
 
